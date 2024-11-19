@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório - Prova 2</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>FACULDADE ANHANGUERA DE UBERLÂNDIA</h1>
+        <h2>Curso de Graduação em Sistemas de Informação</h2>
+        <h3>Disciplina de Desenvolvimento de Sistemas de Informação</h3>
+        <h4>Professor: Rodrigo Morais</h4>
+    </header>
+
+    <section class="report">
+        <h2>Relatório: Potenciômetro</h2>
+        <p>Ana Júlia Fernandes Oliveira<br>
+           Amanda Nelma Prado Borges<br>
+           Laryssa Nogueira Alves<br>
+           Luiz Paulo Parreira Lima</p>
+    </section>
+
+    <section>
+        <h2>Introdução</h2>
+        <p>Este projeto visa desenvolver uma cancela automática que utilize um sensor ultrassônico para identificar a aproximação de veículos e, com isso, acionar o movimento de abertura da cancela. A cancela automatizada foi desenvolvida utilizando a plataforma Arduino. O sensor ultrassônico é utilizado para medir a distância entre a cancela e o veículo, determinando quando é necessário abrir a cancela.</p>
+        <p>A automação de sistemas de controle de acesso tem se tornado uma solução cada vez mais comum em diversos segmentos, como estacionamentos, portões de segurança e áreas restritas. O uso de sistemas automatizados oferece praticidade e eficiência, além de melhorar a segurança, diminuindo a intervenção manual.</p>
+    </section>
+
+    <section>
+        <h2>Objetivos</h2>
+        <p>O objetivo desse projeto é desenvolver uma cancela automática que utiliza um sensor ultrassônico para detectar a aproximação de veículos e, com base nessa detecção, acionar a abertura e o fechamento automático da cancela.</p>
+    </section>
+
+    <section>
+        <h2>Materiais Utilizados</h2>
+        <ul>
+            <li>Arduino Uno</li>
+            <li>Software Arduino IDE</li>
+            <li>Notebook</li>
+            <li>Micro Servo Motor</li>
+            <li>Sensor Ultrassônico</li>
+            <li>Placa de Ensaio</li>
+            <li>Cabos Jumpers</li>
+            <li>Cabo USB</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Diagrama do Circuito</h2>
+        <img src="foto1.jpg" alt="Diagrama do circuito" class="circuit-image">
+        <img src="foto2.jpg" alt="Foto da prática do projeto" class="circuit-image">
+    </section>
+
+    <section>
+        <h2>Código Fonte</h2>
+        <pre>
+<code>
+#include <Servo.h>
+
+Servo servo;
+
+int trigPin = 11;
+int echoPin = 12;
+
+long duration;
+int distance;
+
+void setup() {
+  servo.attach(13);
+  servo.write(180);
+  delay(2000);
+
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+  distance = duration * 0.034 / 2;
+
+  Serial.print("Distance: ");
+  Serial.println(distance);
+
+  if (distance <= 25) {
+    servo.write(180);
+    delay(3000);
+  } else {
+    servo.write(90);
+  }
+}
+</code>
+        </pre>
+    </section>
+
+    <section>
+        <h2>Desenvolvimento</h2>
+        <p>Após a montagem e o upload do código, observou-se que o brilho do LED variava conforme a rotação do potenciômetro. Quando o potenciômetro estava na posição mínima, o LED apagava completamente, e na posição máxima, o LED emitia seu brilho máximo. A variação de brilho era suave e respondia de maneira adequada ao movimento do potenciômetro.</p>
+        <p>O circuito foi montado conectando o sensor ultrassônico e o motor servo ao Arduino. O sensor foi posicionado de forma que pudesse medir a distância entre o veículo e a cancela. O motor servo foi montado na estrutura da cancela, sendo responsável pelo movimento de abertura e fechamento.</p>
+    </section>
+
+    <section>
+        <h2>Resultados</h2>
+        <p>Apesar dos aspectos positivos, o sistema apresentou diversas falhas durante os testes em situações mais dinâmicas. O sensor ultrassônico apresentou imprecisões quando o veículo se aproximava em ângulos diferentes. Isso se deve à limitação do sensor, que é mais preciso em distâncias frontais e em ambientes sem obstáculos. Em algumas ocasiões, o sensor não detectou corretamente a proximidade do veículo, fazendo com que a cancela não fosse aberta a tempo.</p>
+        <p>Em alguns testes, o motor servo não respondeu de forma consistente. O servo motor às vezes ficava preso em uma posição intermediária ou não se movia até a posição correta (90° ou 0°). Isso foi causado por falhas na alimentação elétrica, que não foi suficiente para o servo operar de forma estável durante todo o processo.</p>
+    </section>
+
+    <section>
+        <h2>Conclusão</h2>
+        <p>O projeto da cancela automática com Arduino e sensor ultrassônico foi desenvolvido com a intenção de criar um sistema de controle de acesso simples e eficiente. Embora o projeto tenha demonstrado viabilidade, com a abertura e fechamento da cancela funcionando de forma geral, o sistema apresentou falhas significativas que impediram o seu funcionamento adequado em condições de uso real.</p>
+    </section>
+
+    <section>
+        <h2>Referências</h2>
+        <ul>
+            <li><a href="https://youtu.be/PFF4DTkMsaM?si=9g63UrUNI8GJr4Zz">Montagem do Projeto</a></li>
+        </ul>
+    </section>
+</body>
+</html>
